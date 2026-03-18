@@ -3,107 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BET013 - A BANCA DO PEIXE</title>
+    <title>BET013 - CASSINO COMPLETO</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         :root { --accent: #ff8c00; --bg: #050505; --card: #121212; --green: #28a745; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; padding-bottom: 50px; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 0; padding-bottom: 60px; overflow-x: hidden; }
         
-        /* Cabeçalho */
-        header { padding: 20px; text-align: center; background: linear-gradient(to bottom, #1a1a1a, var(--bg)); }
-        .logo { width: 80px; filter: drop-shadow(0 0 10px var(--accent)); border-radius: 50%; }
+        header { padding: 15px; text-align: center; background: #111; border-bottom: 2px solid var(--accent); }
+        .logo { width: 60px; border-radius: 50%; }
 
-        /* Botão de Depósito chamativo */
-        .btn-pix { background: var(--green); color: white; text-decoration: none; display: block; padding: 18px; border-radius: 12px; font-weight: bold; font-size: 18px; margin: 10px 15px; border-bottom: 5px solid #1e7e34; text-align: center; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(40, 167, 69, 0.4); } 100% { transform: scale(1); } }
+        .btn-pix { background: var(--green); color: white; text-decoration: none; display: block; padding: 15px; border-radius: 8px; font-weight: bold; margin: 10px; text-align: center; animation: pulse 2s infinite; font-size: 14px; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
 
-        /* Banner de Destaque Santos */
-        .featured-banner { margin: 15px; background: linear-gradient(45deg, #111, #222); border: 1px solid #333; border-radius: 15px; padding: 15px; border-left: 5px solid var(--accent); position: relative; }
-        .live-dot { height: 10px; width: 10px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 5px; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
+        .section-title { padding: 15px; font-size: 14px; color: var(--accent); font-weight: bold; background: #0f0f0f; margin-top: 10px; border-left: 4px solid var(--accent); display: flex; justify-content: space-between; }
 
-        /* Grade de Slots */
-        .section-title { padding-left: 15px; font-size: 16px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-top: 20px; }
-        .slots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        .slot-card { background: var(--card); border-radius: 12px; padding: 10px; border: 1px solid #252525; text-align: center; }
-        .slot-card img { width: 100%; border-radius: 10px; margin-bottom: 10px; height: 100px; object-fit: cover; background: #222; }
-        .btn-play { background: var(--accent); color: black; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: 900; text-decoration: none; display: block; }
+        /* Grade Infinita */
+        .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px; }
+        .slot-card { background: var(--card); border-radius: 8px; padding: 5px; border: 1px solid #222; position: relative; text-align: center; font-size: 10px; }
+        .slot-card img { width: 100%; border-radius: 5px; height: 80px; object-fit: cover; background: #1a1a1a; }
+        .op-tag { position: absolute; top: 2px; left: 2px; background: rgba(0,0,0,0.8); font-size: 7px; padding: 2px; border-radius: 2px; color: #aaa; }
+        .play-small { background: var(--accent); color: black; text-decoration: none; display: block; padding: 5px 0; border-radius: 4px; font-weight: bold; margin-top: 5px; }
 
-        /* Jogos de Futebol */
-        .match-card { background: #181818; margin: 15px; border-radius: 12px; padding: 15px; border: 1px solid #252525; border-bottom: 3px solid var(--accent); }
-        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: #888; border-bottom: 1px solid #222; padding-bottom: 8px; margin-bottom: 10px; }
-        .match-teams { font-weight: bold; font-size: 16px; margin-bottom: 15px; color: #fff; }
-        .odds-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .odd { background: #222; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #333; }
-        .odd span { display: block; font-size: 10px; color: var(--accent); font-weight: bold; }
+        /* Barra de Navegação Inferior (Estilo App Profissional) */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; }
+        .nav-item { color: #888; font-size: 10px; text-decoration: none; text-align: center; }
+        .nav-item.active { color: var(--accent); }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/logo.png" class="logo" alt="BET013">
-        <h1 style="font-size: 22px; margin-top: 10px; letter-spacing: 2px;">BET<span style="color:var(--accent)">013</span></h1>
+        <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/logo.png" class="logo">
+        <div style="font-size: 12px; font-weight: bold;">BET013 CASINO</div>
     </header>
 
-    <a href="https://333bet.com/?id=18324680" class="btn-pix">💸 DEPOSITAR VIA PIX</a>
+    <a href="https://333bet.com/?id=18324680" class="btn-pix">💰 DEPOSITAR VIA PIX</a>
 
-    <div class="featured-banner">
-        <span class="live-dot"></span> <span style="font-size: 12px; font-weight: bold;">SANTOS FC - AO VIVO</span>
-        <h3 style="margin: 5px 0;">O Peixe não para! 🐳</h3>
-        <p style="font-size: 13px; color: #aaa; margin: 0;">Odds exclusivas para a Vila Belmiro.</p>
+    <div class="section-title">🎰 PG SOFT <span>Ver Tudo</span></div>
+    <div id="pg-slots" class="slots-grid">
+        </div>
+
+    <div class="section-title">💎 PRAGMATIC PLAY <span>HOT</span></div>
+    <div id="pragmatic-slots" class="slots-grid">
+        </div>
+
+    <div class="section-title">🃏 TADA GAMING <span>NOVO</span></div>
+    <div id="tada-slots" class="slots-grid">
+        </div>
+
+    <div class="nav-bar">
+        <a href="#" class="nav-item active">🏠<br>Início</a>
+        <a href="https://333bet.com/?id=18324680" class="nav-item">🎰<br>Slots</a>
+        <a href="https://333bet.com/?id=18324680" class="nav-item">⚽<br>Esportes</a>
+        <a href="https://333bet.com/?id=18324680" class="nav-item">👤<br>Conta</a>
     </div>
-
-    <div class="section-title">🎰 Slots Populares</div>
-    <div class="slots-grid">
-        <div class="slot-card">
-            <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/fortune-tiger.png" alt="Tiger">
-            <a href="https://333bet.com/?id=18324680" class="btn-play">APOSTAR</a>
-        </div>
-        <div class="slot-card">
-            <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/fortune-ox.png" alt="Ox">
-            <a href="https://333bet.com/?id=18324680" class="btn-play">APOSTAR</a>
-        </div>
-    </div>
-
-    <div class="section-title">⚽ Futebol 013</div>
-    <div id="matches-container">
-        </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCEunVylFb38Pp-zmN51j8373ac0",
-            authDomain: "bet013.firebaseapp.com",
-            databaseURL: "https://bet013-default-rtdb.firebaseio.com",
-            projectId: "bet013",
-            storageBucket: "bet013.firebasestorage.app",
-            messagingSenderId: "872315315044",
-            appId: "1:872315315044:web:29f08c9ac9ddf5"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        database.ref('matches/').on('value', (snapshot) => {
-            const container = document.getElementById('matches-container');
-            container.innerHTML = '';
-            const data = snapshot.val();
-            if(data) {
-                Object.values(data).reverse().forEach(item => {
-                    container.innerHTML += `
-                        <div class="match-card">
-                            <div class="match-header"><span>${item.league}</span><span>${item.time}</span></div>
-                            <div class="match-teams">${item.match}</div>
-                            <div class="odds-row">
-                                <div class="odd"><span>1</span>${item.home}</div>
-                                <div class="odd"><span>X</span>${item.draw}</div>
-                                <div class="odd"><span>2</span>${item.away}</div>
-                            </div>
-                        </div>`;
-                });
-            } else {
-                container.innerHTML = '<p style="text-align:center; color:#555;">Buscando jogos ao vivo...</p>';
+        // Função para gerar muitos slots automaticamente
+        function createSlots(containerId, providerName, count, startSeed) {
+            const container = document.getElementById(containerId);
+            const games = ["Fortune Tiger", "Fortune Ox", "Gates of Olympus", "Sugar Rush", "Aviator", "Mines", "Crazy Time", "Sweet Bonanza", "Big Bass", "Joker"];
+            
+            for (let i = 0; i < count; i++) {
+                const gameName = games[Math.floor(Math.random() * games.length)] + " " + (i + 1);
+                const seed = startSeed + i;
+                container.innerHTML += `
+                    <div class="slot-card">
+                        <span class="op-tag">${providerName}</span>
+                        <img src="https://picsum.photos/seed/${seed}/200/200" alt="Game">
+                        <div style="margin:4px 0; overflow:hidden; white-space:nowrap;">${gameName}</div>
+                        <a href="https://333bet.com/?id=18324680" class="play-small">JOGAR</a>
+                    </div>
+                `;
             }
-        });
+        }
+
+        // Criando 15 slots para cada operadora (total 45 visíveis de cara)
+        // Você pode aumentar esse número, mas 15 de cada já enche a tela!
+        createSlots('pg-slots', 'PG SOFT', 15, 100);
+        createSlots('pragmatic-slots', 'PRAGMATIC', 15, 200);
+        createSlots('tada-slots', 'TADA', 15, 300);
     </script>
 </body>
 </html>
