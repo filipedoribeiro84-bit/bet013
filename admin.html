@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bet013 - Admin</title>
+    <title>Bet013 - Admin Control</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         body { font-family: sans-serif; background: #0b0b0b; color: #ff8c00; text-align: center; padding: 20px; }
-        .card { background: #151515; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; }
+        .card { background: #1e1e1e; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; }
         input { width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: #222; color: white; font-size: 16px; }
         button { background: #ff8c00; color: #000; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 16px; }
+        h1 { letter-spacing: 3px; }
     </style>
 </head>
 <body>
@@ -53,10 +54,10 @@
 
             database.ref('matches/').push(matchData)
                 .then(() => {
-                    alert("GOLAÇO! Match published!");
+                    alert("GOLAÇO! Match published successfully!");
                     document.querySelectorAll('input').forEach(i => i.value = '');
                 })
-                .catch((e) => alert("Error: " + e.message));
+                .catch((error) => alert("Error: " + error.message));
         }
     </script>
 </body>
