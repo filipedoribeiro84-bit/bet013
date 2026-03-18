@@ -8,77 +8,75 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         :root { --accent: #ff8c00; --bg: #050505; --card: #121212; --green: #00ff00; }
-        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding-bottom: 70px; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding-bottom: 80px; }
         
         header { padding: 15px; text-align: center; background: #111; border-bottom: 2px solid var(--accent); }
         .logo { width: 60px; border-radius: 50%; box-shadow: 0 0 15px var(--accent); }
 
-        /* Botão PIX Melhorado */
+        /* Botão PIX - Link de Convite Ajustado */
         .btn-pix { background: var(--green); color: black; text-decoration: none; display: block; padding: 15px; border-radius: 8px; font-weight: 900; margin: 10px; text-align: center; font-size: 16px; border-bottom: 4px solid #008000; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        @keyframes blink { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .section-title { padding: 12px; font-size: 13px; color: var(--accent); font-weight: bold; background: #0f0f0f; margin-top: 5px; border-left: 4px solid var(--accent); display: flex; justify-content: space-between; }
 
-        /* Grade de 3 Colunas (Igual ao seu print) */
-        .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; }
-        .slot-card { background: var(--card); border-radius: 6px; padding: 4px; border: 1px solid #222; position: relative; text-align: center; font-size: 9px; }
-        .slot-card img { width: 100%; border-radius: 4px; height: 85px; object-fit: cover; background: #1a1a1a; }
-        .op-tag { position: absolute; top: 2px; left: 2px; background: rgba(0,0,0,0.8); font-size: 7px; padding: 1px 3px; border-radius: 2px; color: #fff; border: 0.5px solid var(--accent); }
-        .play-btn { background: var(--accent); color: black; text-decoration: none; display: block; padding: 4px 0; border-radius: 3px; font-weight: bold; margin-top: 4px; font-size: 10px; }
+        /* Grade de 3 Colunas Real */
+        .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px; }
+        .slot-card { background: var(--card); border-radius: 8px; padding: 5px; border: 1px solid #222; position: relative; text-align: center; font-size: 9px; min-height: 130px; }
+        .slot-card img { width: 100%; border-radius: 5px; height: 80px; object-fit: cover; background: #1a1a1a; }
+        .op-tag { position: absolute; top: 3px; left: 3px; background: rgba(0,0,0,0.8); font-size: 7px; padding: 1px 4px; border-radius: 2px; color: #fff; border: 0.5px solid var(--accent); }
+        .play-btn { background: var(--accent); color: black; text-decoration: none; display: block; padding: 5px 0; border-radius: 4px; font-weight: bold; margin-top: 5px; font-size: 10px; }
 
-        /* Navegação Inferior */
-        .footer-nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; z-index: 100; }
+        /* Rodapé Fixo */
+        .footer-nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 999; }
         .nav-link { color: #888; font-size: 10px; text-decoration: none; text-align: center; }
-        .nav-link.active { color: var(--accent); }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/logo.png" class="logo" alt="013">
+        <img src="https://raw.githubusercontent.com/filiperibeiro84-bit/bet013/main/logo.png" class="logo">
     </header>
 
-    <a href="https://333bet.com/register?id=18324680" class="btn-pix">⚡ DEPOSITAR VIA PIX ⚡</a>
+    <a href="https://333bet.com/register?id=18324680&currency=BRL" class="btn-pix">⚡ DEPOSITAR VIA PIX ⚡</a>
 
     <div class="section-title">🎰 PG SOFT <span>QUENTE 🔥</span></div>
     <div id="pg-container" class="slots-grid"></div>
 
-    <div class="section-title">💎 PRAGMATIC PLAY <span>POPULAR</span></div>
+    <div class="section-title">💎 PRAGMATIC PLAY <span>TOP</span></div>
     <div id="prag-container" class="slots-grid"></div>
 
     <div class="section-title">🃏 TADA GAMING <span>NOVOS</span></div>
     <div id="tada-container" class="slots-grid"></div>
 
     <div class="footer-nav">
-        <a href="#" class="nav-link active">🏠<br>Início</a>
+        <a href="#" class="nav-link" style="color:var(--accent)">🏠<br>Início</a>
         <a href="https://333bet.com/register?id=18324680" class="nav-link">🎰<br>Slots</a>
         <a href="https://333bet.com/register?id=18324680" class="nav-link">⚽<br>Esportes</a>
-        <a href="https://333bet.com/register?id=18324680" class="nav-link">👤<br>Conta</a>
+        <a href="https://333bet.com/register?id=18324680" class="nav-link">👤<br>Minha Conta</a>
     </div>
 
     <script>
-        // Gerador de Slots para encher a tela
-        function fillSlots(id, provider, color, startId) {
+        function fillSlots(id, provider, startId) {
             const container = document.getElementById(id);
-            const names = ["Fortune", "Golden", "Lucky", "Super", "Magic", "Mega", "King", "Wild"];
-            const icons = ["Tiger", "Ox", "Rabbit", "Mouse", "Dragon", "Snake", "Horse", "Goat"];
+            const games = ["Tiger", "Ox", "Rabbit", "Mouse", "Dragon", "Snake", "Horse", "Goat", "Gold", "Wild", "Sugar", "Gates"];
             
-            for(let i=0; i<12; i++) {
-                const game = names[i % names.length] + " " + icons[i % icons.length];
+            // Loop para criar muitos jogos de uma vez
+            for(let i=0; i<15; i++) {
+                const gameName = games[i % games.length] + " " + (i + 1);
                 container.innerHTML += `
                     <div class="slot-card">
-                        <span class="op-tag" style="border-color:${color}">${provider}</span>
+                        <span class="op-tag">${provider}</span>
                         <img src="https://picsum.photos/seed/${startId + i}/200/200">
-                        <div style="margin:3px 0; height:12px; overflow:hidden;">${game}</div>
+                        <div style="margin:4px 0; font-weight:bold;">${gameName}</div>
                         <a href="https://333bet.com/register?id=18324680" class="play-btn">JOGAR</a>
                     </div>
                 `;
             }
         }
 
-        fillSlots('pg-container', 'PG SOFT', '#ff8c00', 10);
-        fillSlots('prag-container', 'PRAGMATIC', '#ff00ff', 50);
-        fillSlots('tada-container', 'TADA', '#00ffff', 90);
+        fillSlots('pg-container', 'PG SOFT', 101);
+        fillSlots('prag-container', 'PRAGMATIC', 201);
+        fillSlots('tada-container', 'TADA', 301);
     </script>
 </body>
 </html>
