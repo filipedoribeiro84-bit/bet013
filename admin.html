@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bet013 - Admin Panel</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #ff8c00; text-align: center; padding: 20px; }
+        .box { background: #1e1e1e; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: #333; color: white; }
+        button { background: #ff8c00; color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>BET013 ADMIN</h1>
+    <div class="box">
+        <h3>Post New Match</h3>
+        <input type="text" id="match" placeholder="Match Name (Ex: Santos vs Peñarol)">
+        <input type="text" id="league" placeholder="League (Ex: Libertadores)">
+        <input type="number" id="home_odd" placeholder="Home Odd">
+        <input type="number" id="draw_odd" placeholder="Draw Odd">
+        <input type="number" id="away_odd" placeholder="Away Odd">
+        <button onclick="publish()">PUBLISH MATCH</button>
+    </div>
+
+    <script>
+        function publish() {
+            const match = document.getElementById('match').value;
+            alert("Match: " + match + "\nSENT TO APK SUCCESSFULLY!");
+        }
+    </script>
+</body>
+</html>
