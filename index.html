@@ -3,22 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bet013 - Painel Oficial</title>
+    <title>Bet013 - Alquimia das Apostas</title>
     <style>
-        body { font-family: sans-serif; background-color: #1a1a1a; color: #ff8c00; text-align: center; padding: 20px; }
-        .card { background: #262626; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 400px; }
-        button { background: #ff8c00; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: #333; color: white; }
-        h1 { text-transform: uppercase; letter-spacing: 2px; }
+        /* Estilos Globais - Tema Escuro e Laranja Bet013 */
+        :root {
+            --bg-principal: #121212; /* Fundo Quase Preto */
+            --bg-card: #1e1e1e;      /* Fundo dos Cards */
+            --cor-destaque: #ff8c00;  /* Laranja Vibrante Bet013 */
+            --cor-texto: #e0e0e0;    /* Cinza Claro */
+            --cor-subtexto: #a0a0a0; /* Cinza Escuro */
+            --borda-card: #333;      /* Borda Suave */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Barra de Navegação Superior */
+        header {
+            width: 100%;
+            background-color: var(--bg-card);
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-destaque);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--cor-destaque);
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+        }
+
+        /* Container Principal */
+        main {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Título da Seção */
+        .secao-titulo {
+            font-size: 18px;
+            color: var(--cor-subtexto);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--cor-destaque);
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Card de Jogo Profissional */
+        .card-jogo {
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda-card);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .card-jogo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 140, 0, 0.2);
+            border-color: var(--cor-destaque);
+        }
+
+        /* Cabeçalho do Card (Campeonato e Data) */
+        .jogo-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--cor-subtexto);
+            text-transform: uppercase;
+        }
+
+        /* Área dos Times */
+        .jogo-times {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .time-nome {
+            flex: 1;
+            text-align: center;
+        }
+
+        .confronto-vs {
+            color: var(--cor-destaque);
+            font-size: 16px;
+        }
+
+        /* Área das Odds (Cotações) */
+        .jogo-odds {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .odd-button {
+            flex: 1;
+            background-color: var(--bg-principal);
+            border: 1px solid var(--borda-card);
+            color: var(--cor-destaque);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .odd-button:hover {
+            background-color: var(--cor-destaque);
+            color: #000;
+        }
+
+        .odd-valor {
+            font-size: 18px;
+        }
+
+        .odd-tipo {
+            font-size: 10px;
+            color: var(--cor-subtexto);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* Rodapé Simples */
+        footer {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            color: var(--cor-subtexto);
+            font-size: 12px;
+            border-top: 1px solid var(--borda-card);
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
-    <h1>B E T 0 1 3</h1>
-    <div class="card">
-        <h3>Lançar Novo Jogo</h3>
-        <input type="text" id="jogo" placeholder="Ex: Santos x Corinthians">
-        <input type="number" id="odd" placeholder="Cotação (Ex: 2.50)">
-        <button onclick="alert('Jogo enviado para o APK Bet013!')">PUBLICAR NO APK</button>
-    </div>
+
+    <header>
+        <h1>B E T 0 1 3</h1>
+    </header>
+
+    <main>
+        <div class="secao-titulo">Jogos em Destaque</div>
+
+        <div class="card-jogo" onclick="apostar('Santos x Palmeiras', '1.85')">
+            <div class="jogo-header">
+                <span>Brasileirão - Série A</span>
+                <span>Hoje - 16:00</span>
+            </div>
+            <div class="jogo-times">
+                <span class="time-nome">Santos</span>
+                <span class="confronto-vs">VS</span>
+                <span class="time-nome">Palmeiras</span>
+            </div>
+            <div class="jogo-odds">
+                <div class="odd-button">
+                    <span class="odd-valor">1.85</span>
+                    <span class="odd-tipo">Casa</span>
+                </div>
+                <div class="odd-button">
+                    <span class="odd-valor">3.40</span>
+                    <span class="odd-tipo">Empate</span>
+                </div>
+                <div class="odd-button">
+                    <span class="odd-valor =">4.20</span>
+                    <span class="odd-tipo">Visitante</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-jogo" onclick="apostar('Corinthians x São Paulo', '2.10')">
+            <div class="jogo-header">
+                <span>Copa do Brasil</span>
+                <span>Amanhã - 21:30</span>
+            </div>
+            <div class="jogo-times">
+                <span class="time-nome">Corinthians</span>
+                <span class="confronto-vs">VS</span>
+                <span class="time-nome">São Paulo</span>
+            </div>
+            <div class="jogo-odds">
+                <div class="odd-button">
+                    <span class="odd-valor">2.10</span>
+                    <span class="odd-tipo">Casa</span>
+                </div>
+                <div class="odd-button">
+                    <span class="odd-valor">3.10</span>
+                    <span class="odd-tipo">Empate</span>
+                </div>
+                <div class="odd-button">
+                    <span class="odd-valor">3.80</span>
+                    <span class="odd-tipo">Visitante</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2023 Bet013 - Alquimia das Apostas. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        function apostar(confronto, odd) {
+            alert("Aposta Iniciada!\nConfronto: " + confronto + "\nOdd: " + odd + "\n\n(Conecte o Firebase para finalizar a aposta)");
+        }
+    </script>
 </body>
 </html>
