@@ -2,30 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bet013 - Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bet013 - Admin Control</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         body { font-family: sans-serif; background: #121212; color: #ff8c00; text-align: center; padding: 20px; }
-        .box { background: #1e1e1e; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: #333; color: white; }
-        button { background: #ff8c00; color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .card { background: #1e1e1e; border: 2px solid #ff8c00; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; box-shadow: 0 0 15px rgba(255,140,0,0.2); }
+        input { width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; background: #333; color: white; font-size: 16px; }
+        button { background: #ff8c00; color: #000; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        button:active { transform: scale(0.98); }
+        h1 { letter-spacing: 3px; }
     </style>
 </head>
 <body>
     <h1>BET013 ADMIN</h1>
-    <div class="box">
+    <div class="card">
         <h3>Post New Match</h3>
-        <input type="text" id="match" placeholder="Match Name (Ex: Santos vs Peñarol)">
-        <input type="text" id="league" placeholder="League (Ex: Libertadores)">
-        <input type="number" id="home_odd" placeholder="Home Odd">
-        <input type="number" id="draw_odd" placeholder="Draw Odd">
-        <input type="number" id="away_odd" placeholder="Away Odd">
-        <button onclick="publish()">PUBLISH MATCH</button>
+        <input type="text" id="match" placeholder="Teams (Ex: Santos vs Peñarol)">
+        <input type="text" id="league" placeholder="League Name">
+        <input type="text" id="time" placeholder="Time (Ex: Today - 20:00)">
+        <input type="number" id="home_odd" placeholder="Home Odd (Ex: 1.80)">
+        <input type="number" id="draw_odd" placeholder="Draw Odd (Ex: 3.20)">
+        <input type="number" id="away_odd" placeholder="Away Odd (Ex: 4.50)">
+        <button onclick="publishMatch()">Publish to Site & APK</button>
     </div>
 
     <script>
-        function publish() {
-            const match = document.getElementById('match').value;
-            alert("Match: " + match + "\nSENT TO APK SUCCESSFULLY!");
+        // Configuração do seu Firebase (conforme o print)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEunVylFb38Pp-zmN51j8373ac0",
+            authDomain: "bet013.firebaseapp.com",
+            databaseURL: "https://bet013-default-rtdb.firebaseio.com",
+            projectId: "bet013",
+            storageBucket: "bet013.firebasestorage.app",
+            messagingSenderId: "872315315044",
+            appId: "1:872315315044:web:29f08c9ac9ddf5"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function publishMatch() {
+            const matchData = {
+                match: document.getElementById('match').value,
+                league: document.getElementById('league').value,
+                time: document.getElementById('time').value,
+                home: document.getElementById('home_odd').value,
+                draw: document.getElementById('draw_odd').value,
+                away: document.getElementById('away_odd').value,
+                timestamp: Date.now()
+            };
+
+            if(!matchData.match || !matchData.home) {
+                alert("Please fill in the fields!");
+                return;
+            }
+
+            database.ref('matches/').push(matchData)
+                .then(() => {
+                    alert("GOLAÇO! Match published successfully!");
+                    document.querySelectorAll('input').forEach(i => i.value = '');
+                })
+                .catch((error) => alert("Error: " + error.message));
         }
     </script>
 </body>
