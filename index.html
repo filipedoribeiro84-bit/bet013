@@ -3,238 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bet013 - Betting Alchemy</title>
+    <title>Bet013 - Sports & Casino</title>
     <style>
-        /* Global Styles - Dark Theme & Bet013 Orange */
         :root {
-            --main-bg: #121212; 
-            --card-bg: #1e1e1e;      
-            --accent-color: #ff8c00;  
-            --text-color: #e0e0e0;    
-            --sub-text: #a0a0a0; 
-            --card-border: #333;      
+            --main-bg: #0f0f0f; 
+            --card-bg: #181818;      
+            --accent: #ff8c00;  
+            --text: #ffffff;    
+            --sub-text: #888; 
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--main-bg);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--main-bg); color: var(--text); margin: 0; padding: 0; }
+        
+        header { background: var(--card-bg); padding: 15px; text-align: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; }
+        header h1 { margin: 0; font-size: 22px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; }
 
-        /* Top Navigation Bar */
-        header {
-            width: 100%;
-            background-color: var(--card-bg);
-            padding: 15px 0;
-            text-align: center;
-            border-bottom: 2px solid var(--accent-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        main { padding: 15px; max-width: 900px; margin: auto; }
 
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
-        }
+        .section-title { font-size: 16px; text-transform: uppercase; color: var(--accent); margin: 25px 0 15px; border-left: 3px solid var(--accent); padding-left: 10px; font-weight: bold; }
 
-        /* Main Container */
-        main {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        /* Estilo Cassino Slots (PG / Pragmatic) */
+        .casino-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .game-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.3s; position: relative; }
+        .game-card:active { transform: scale(0.95); border-color: var(--accent); }
+        .game-img { width: 100%; height: 140px; background-size: cover; background-position: center; filter: brightness(0.8); }
+        .game-info { padding: 10px; text-align: center; font-size: 14px; font-weight: bold; background: rgba(0,0,0,0.6); }
+        .provider-tag { font-size: 9px; color: var(--accent); display: block; margin-bottom: 4px; }
 
-        /* Section Title */
-        .section-title {
-            font-size: 18px;
-            color: var(--sub-text);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-            margin-bottom: 10px;
-        }
+        /* Estilo Apostas Esportivas */
+        .match-card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 12px; border: 1px solid #222; }
+        .match-header { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text); margin-bottom: 10px; }
+        .match-teams { display: flex; justify-content: space-around; align-items: center; font-weight: bold; margin-bottom: 15px; }
+        .odds-row { display: flex; gap: 8px; }
+        .odd-btn { flex: 1; background: #222; border: 1px solid #333; color: var(--accent); padding: 10px; border-radius: 6px; text-align: center; font-size: 14px; cursor: pointer; }
+        .odd-btn span { display: block; font-size: 9px; color: var(--sub-text); }
 
-        /* Professional Match Card */
-        .match-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-
-        .match-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(255, 140, 0, 0.2);
-            border-color: var(--accent-color);
-        }
-
-        /* Card Header (League & Date) */
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--sub-text);
-            text-transform: uppercase;
-        }
-
-        /* Teams Area */
-        .match-teams {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .team-name {
-            flex: 1;
-            text-align: center;
-        }
-
-        .vs-label {
-            color: var(--accent-color);
-            font-size: 16px;
-        }
-
-        /* Odds Buttons Area */
-        .match-odds {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .odd-button {
-            flex: 1;
-            background-color: var(--main-bg);
-            border: 1px solid var(--card-border);
-            color: var(--accent-color);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .odd-button:hover {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-
-        .odd-value {
-            font-size: 18px;
-        }
-
-        .odd-label {
-            font-size: 10px;
-            color: var(--sub-text);
-            text-transform: uppercase;
-            display: block;
-        }
-
-        /* Footer */
-        footer {
-            width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            color: var(--sub-text);
-            font-size: 12px;
-            border-top: 1px solid var(--card-border);
-            margin-top: auto;
-        }
+        footer { text-align: center; padding: 30px; font-size: 10px; color: var(--sub-text); border-top: 1px solid #222; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>B E T 0 1 3</h1>
-    </header>
+<header>
+    <h1>B E T 0 1 3</h1>
+</header>
 
-    <main>
-        <div class="section-title">Featured Matches</div>
-
-        <div class="match-card" onclick="placeBet('Santos vs Palmeiras', '1.85')">
-            <div class="match-header">
-                <span>Brazilian Serie A</span>
-                <span>Today - 16:00</span>
-            </div>
-            <div class="match-teams">
-                <span class="team-name">Santos</span>
-                <span class="vs-label">VS</span>
-                <span class="team-name">Palmeiras</span>
-            </div>
-            <div class="match-odds">
-                <div class="odd-button">
-                    <span class="odd-value">1.85</span>
-                    <span class="odd-label">Home</span>
-                </div>
-                <div class="odd-button">
-                    <span class="odd-value">3.40</span>
-                    <span class="odd-label">Draw</span>
-                </div>
-                <div class="odd-button">
-                    <span class="odd-value">4.20</span>
-                    <span class="odd-label">Away</span>
-                </div>
+<main>
+    <div class="section-title">Popular Casino Slots</div>
+    <div class="casino-grid">
+        <div class="game-card" onclick="openGame('Fortune Tiger')">
+            <div class="game-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz-M6L7W-z5m8l9aGzB-iYI-9kL5hA5Z3xUA&s');"></div>
+            <div class="game-info">
+                <span class="provider-tag">PG SOFT</span>
+                Fortune Tiger
             </div>
         </div>
 
-        <div class="match-card" onclick="placeBet('Corinthians vs Sao Paulo', '2.10')">
-            <div class="match-header">
-                <span>Brazil Cup</span>
-                <span>Tomorrow - 21:30</span>
-            </div>
-            <div class="match-teams">
-                <span class="team-name">Corinthians</span>
-                <span class="vs-label">VS</span>
-                <span class="team-name">Sao Paulo</span>
-            </div>
-            <div class="match-odds">
-                <div class="odd-button">
-                    <span class="odd-value">2.10</span>
-                    <span class="odd-label">Home</span>
-                </div>
-                <div class="odd-button">
-                    <span class="odd-value">3.10</span>
-                    <span class="odd-label">Draw</span>
-                </div>
-                <div class="odd-button">
-                    <span class="odd-value">3.80</span>
-                    <span class="odd-label">Away</span>
-                </div>
+        <div class="game-card" onclick="openGame('Gates of Olympus')">
+            <div class="game-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6f8Xv7H_yC1Yq_Jv-J_Y_6Q_K_2_K_L_Z_A&s');"></div>
+            <div class="game-info">
+                <span class="provider-tag">PRAGMATIC</span>
+                Gates of Olympus
             </div>
         </div>
+    </div>
 
-    </main>
+    <div class="section-title">Featured Sports</div>
+    <div id="sports-list">
+        <div class="match-card">
+            <div class="match-header"><span>Copa Libertadores</span><span>LIVE</span></div>
+            <div class="match-teams"><span>SANTOS</span><span style="color:var(--accent)">VS</span><span>PEÑAROL</span></div>
+            <div class="odds-row">
+                <div class="odd-btn">1.95<span>HOME</span></div>
+                <div class="odd-btn">3.10<span>DRAW</span></div>
+                <div class="odd-btn">4.50<span>AWAY</span></div>
+            </div>
+        </div>
+    </div>
+</main>
 
-    <footer>
-        &copy; 2026 Bet013 - Counter Alchemy. All rights reserved.
-    </footer>
+<footer>
+    BET013 PLATFORM v2.0 - 2026<br>
+    Responsibility & Entertainment
+</footer>
 
-    <script>
-        function placeBet(match, odd) {
-            alert("Bet Initiated!\nMatch: " + match + "\nOdd: " + odd + "\n\nConnect Firebase to process real bets.");
-        }
-    </script>
+<script>
+    function openGame(name) {
+        alert("Redirecting to " + name + "...\n(Login required to play with balance)");
+    }
+</script>
+
 </body>
 </html>
